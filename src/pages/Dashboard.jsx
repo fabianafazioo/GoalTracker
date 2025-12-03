@@ -4,10 +4,10 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import useGoals from "../hooks/useGoals";
 import GoalList from "../components/goals/GoalList";
-import Modal from "../components/Modal";
+import Modal from "../components/user/Modal";
 import GoalForm from "../components/goals/GoalForm";
 import EmptyState from "../components/EmptyState";
-import BadgeStat from "../components/BadgeStat";
+import BadgeStat from "../components/user/BadgeStat";
 
 export default function Dashboard() {
   const { user } = useAuth();

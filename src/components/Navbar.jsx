@@ -10,10 +10,8 @@ export default function Navbar() {
     const toggle = () => setOpen(v => !v);
     const close = () => setOpen(false);
 
-    
     useEffect(() => { close(); }, [location.pathname]);
 
-    
     useEffect(() => {
         if (!open) return;
         const onKey = (e) => e.key === "Escape" && close();
@@ -30,7 +28,6 @@ export default function Navbar() {
             {/* Top bar */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-divider h-16">
                 <div className="h-full px-4 flex items-center gap-3">
-                   
                     {user ? (
                         <button
                             type="button"
@@ -38,10 +35,8 @@ export default function Navbar() {
                             aria-controls="app-drawer"
                             aria-expanded={open}
                             onClick={toggle}
-                            className="h-10 w-10 inline-flex items-center justify-center rounded-xl bg-white/70 hover:bg-white
-                         shadow-pastelSm active:translate-y-[1px] transition"
+                            className="h-10 w-10 inline-flex items-center justify-center rounded-xl bg-white/70 hover:bg-white shadow-pastelSm active:translate-y-[1px] transition"
                         >
-                           
                             <span className="relative block h-5 w-6">
                                 <span
                                     className={`absolute left-0 top-0 h-0.5 w-6 rounded bg-[#6f3f83] transition-transform duration-300
@@ -65,50 +60,66 @@ export default function Navbar() {
                         to={user ? "/" : "/login"}
                         className="no-underline flex items-center gap-2 group transition-transform duration-300"
                     >
-                        {/* Mini Logo */}
-                        <span className=" inline-flex items-center justify-center select-none rounded-lg text-white font-extrabold tracking-wide bg-gradient-to-br from-rose2 via-rose3 to-violet shadow-pastelSm-[0_4px_12px_rgba(183,143,203,0.35)] ring-1 ring-rose3/50 group-hover:scale-110 group-hover:shadow-pastelSm transition-all duration-300 ease-out" style={{ width: 32, height: 32, fontSize: 14, lineHeight: 1,}} aria-hidden="true" title="GT">
+                        <span
+                            className="inline-flex items-center justify-center select-none rounded-lg text-white font-extrabold tracking-wide bg-gradient-to-br from-rose2 via-rose3 to-violet shadow-pastelSm-[0_4px_12px_rgba(183,143,203,0.35)] ring-1 ring-rose3/50 group-hover:scale-110 group-hover:shadow-pastelSm transition-all duration-300 ease-out"
+                            style={{ width: 32, height: 32, fontSize: 14, lineHeight: 1 }}
+                            aria-hidden="true"
+                            title="GT"
+                        >
                             GT
                         </span>
 
-                        {/* Text */}
-                        <span className=" font-extrabold text-violet text-xl tracking-tight group-hover:text-violet2 transition-colors duration-300">
+                        <span className="font-extrabold text-violet text-xl tracking-tight group-hover:text-violet2 transition-colors duration-300">
                             Goal Tracker
                         </span>
                     </Link>
                 </div>
             </header>
 
-            
+            {/* Drawer */}
             {user && (
                 <>
                     {/* Backdrop */}
                     <div
                         onClick={close}
-                        className={`fixed inset-0 bg-black/30 z-30 transition-opacity
-                        ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                        className={`fixed inset-0 bg-black/30 z-30 transition-opacity ${
+                            open ? "opacity-100" : "opacity-0 pointer-events-none"
+                        }`}
                     />
 
-                   
+                    {/* Sidebar */}
                     <aside
                         id="app-drawer"
-                        className={`fixed z-40 top-0 left-0 h-full w-64 bg-violet 
-                        transition-transform duration-300
-                        ${open ? "translate-x-0" : "-translate-x-full"}`}
+                        className={`fixed z-40 top-0 left-0 h-full w-64 bg-violet transition-transform duration-300 flex flex-col ${
+                            open ? "translate-x-0" : "-translate-x-full"
+                        }`}
                         aria-label="App navigation"
                     >
                         <div className="h-16" />
-                        <nav className="p-4 flex flex-col gap-2">
+
+                        {/* Navigation section */}
+                        <nav className="p-4 flex flex-col gap-2 flex-1 overflow-y-auto">
                             <NavLink to="/" className={itemClass} onClick={close}>Home</NavLink>
+                            <NavLink to="/groups" className={itemClass} onClick={close}>Groups</NavLink>
                             <NavLink to="/settings" className={itemClass} onClick={close}>Settings</NavLink>
-                            <NavLink to="/completed-goal-history" className={itemClass} onClick={close}>Completed Goal History</NavLink>
-                            <div className="divider" />
+                            <NavLink to="/completed-goal-history" className={itemClass} onClick={close}>History</NavLink>
+                        </nav>
+
+                        {/* Logout at bottom */}
+                        <div className="p-4 border-t border-white/20">
                             <button
                                 onClick={() => { logout(); close(); }}
-                                className="text-left mt-2 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white"
+                                className="
+                                    w-full text-left px-4 py-2 rounded-xl font-semibold 
+                                    bg-gradient-to-br from-rose-950/20 via-rose-800/20 to-rose-950/20 
+                                    text-white shadow-lg shadow-rose-600/20 
+                                    hover:brightness-120 active:scale-[0.98] 
+                                    transition-all duration-200
+                                "
                             >
                                 Logout
                             </button>
-                        </nav>
+                        </div>
                     </aside>
                 </>
             )}
